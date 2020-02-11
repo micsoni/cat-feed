@@ -1,8 +1,8 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import Card from "./components/Card";
+// import Card from "./components/Card";
 import Thumbnail from "./components/Thumbnails";
+import Feed from "./components/Feed";
 
 function App() {
   return (
@@ -16,7 +16,8 @@ function App() {
           ></Thumbnail>
         </section>
         <section id="feed">
-          <Card src="./images/photo1.jpeg" text="A random text"></Card>
+          <Feed />
+          {/* <Card src="./images/photo1.jpeg" text="A random text"></Card> */}
         </section>
       </main>
     </div>
