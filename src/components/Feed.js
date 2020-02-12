@@ -5,13 +5,10 @@ export default class Feed extends React.Component {
   state = {
     loading: true,
     error: false,
-    cards: [] //[{image:"http", numberOfLikes:0}, {}]
+    cards: [] // [{ id: "1", src:"http", likes:0}]
   };
 
   componentDidMount() {
-    // (1) fetch some data (hopefully, something resembling a list of articles)
-    // (2) put it in component local state (as per the shape discussed above)
-    // (3) ...and if the loading fails, set an error state like discussed above
     return fetch(
       "https://api.thecatapi.com/v1/images/search?limit=5&page=10&order=Desc"
     )
@@ -20,10 +17,7 @@ export default class Feed extends React.Component {
         const dataMaped = data.map(imageDetails => {
           return { src: imageDetails.url, id: imageDetails.id, likes: 0 };
         });
-        // console.log("articles", this.state.articles);
-        console.log("DATAAAAAA", dataMaped);
         this.setState({ cards: dataMaped, loading: false });
-        console.log("STATE", this.state.cards);
       })
       .catch(error => {
         this.setState({ error: true });
@@ -31,34 +25,45 @@ export default class Feed extends React.Component {
       });
   }
 
-  likeCard = () => this.setState({ likes: this.state.likes + 1 });
+  addLike = id => {
+    // get the id from current card
+    // check if id from current card is the right one
+    // inside a map
+    const updatedCards = this.state.cards.map(currCard => {
+      if (currCard.id === id) {
+        console.log("currCard id:", currCard.id);
+
+        return { ...currCard, likes: currCard.likes + 1 };
+      } else {
+        return currCard;
+      }
+    });
+
+    this.setState({ cards: updatedCards });
+  };
+  // this.setState({ likes: this.state.likes + 1 });
 
   renderCards = cardsArray => {
     return cardsArray.map(card => {
       return (
-        <Card key={card.id} src={card.src} id={card.id} likes={card.likes} />
+        <Card
+          key={card.id}
+          src={card.src}
+          id={card.id}
+          likes={card.likes}
+          incrementLikes={this.addLike}
+        />
       );
     });
-    // console.log("CAR
   };
 
   render() {
     if (this.state.loading) {
-      return <div>It is loading!!!</div>;
+      return <div>Loading!</div>;
     } else if (this.state.error) {
-      return <div>Error!!</div>;
+      return <div>Error!</div>;
     } else {
-      console.log("RENDER", this.renderCards(this.state.cards));
       return <div> {this.renderCards(this.state.cards)}</div>;
-
-      // <div className="card">
-      //   <div className="fact-text">{this.props.text}</div>
-
-      //   <img className="image" src={this.props.src} alt="useful" />
-
-      //   {console.log("log inside render", this.state.images)}
-      //   {this.renderImages(this.state.images)}
-      // </div>
     }
   }
 }

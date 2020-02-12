@@ -7,13 +7,18 @@ export default class Card extends React.Component {
     src: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired
   };
+
+  handleClick = () => {
+    console.log("handleClick");
+    this.props.incrementLike(this.props.id);
+  };
+
   render() {
     return (
       <div className="card">
         <img className="image" src={this.props.src} alt="useful" />
-        {/* <b>{this.state.numLikes}</b> */}
         <div>{this.props.likes}</div>
-        <button onClick={this.props.likeCard}>More Cats!</button>
+        <button onClick={this.handleClick}>More Cats!</button>
         {/* <div className="fact-text">{this.props.text}</div> */}
       </div>
     );
