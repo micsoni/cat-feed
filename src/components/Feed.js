@@ -5,8 +5,9 @@ export default class Feed extends React.Component {
   state = {
     loading: true,
     error: false,
-    images: []
+    cards: [] //[{image:"http", numberOfLikes:0}, {}]
   };
+
   componentDidMount() {
     // (1) fetch some data (hopefully, something resembling a list of articles)
     // (2) put it in component local state (as per the shape discussed above)
@@ -16,10 +17,13 @@ export default class Feed extends React.Component {
     )
       .then(res => res.json())
       .then(data => {
+        const dataMaped = data.map(imageDetails => {
+          return { src: imageDetails.url, id: imageDetails.id, likes: 0 };
+        });
         // console.log("articles", this.state.articles);
-        console.log(data);
-        this.setState({});
-        this.setState({ images: data, loading: false });
+        console.log("DATAAAAAA", dataMaped);
+        this.setState({ cards: dataMaped, loading: false });
+        console.log("STATE", this.state.cards);
       })
       .catch(error => {
         this.setState({ error: true });
@@ -27,21 +31,25 @@ export default class Feed extends React.Component {
       });
   }
 
-  renderCards(array) {
-    const imageUrl = array.map(image => (
-      <Card key={image.id} src={image.url} />
-    ));
-    console.log("imageUrl: ", imageUrl);
-    return imageUrl;
-  }
+  likeCard = () => this.setState({ likes: this.state.likes + 1 });
+
+  renderCards = cardsArray => {
+    return cardsArray.map(card => {
+      return (
+        <Card key={card.id} src={card.src} id={card.id} likes={card.likes} />
+      );
+    });
+    // console.log("CAR
+  };
 
   render() {
     if (this.state.loading) {
-      return <div>{/* TODO */}It is loading!!!</div>;
+      return <div>It is loading!!!</div>;
     } else if (this.state.error) {
-      return <div>{/* TODO */}Error!!</div>;
+      return <div>Error!!</div>;
     } else {
-      return <div> {this.renderCards(this.state.images)}</div>;
+      console.log("RENDER", this.renderCards(this.state.cards));
+      return <div> {this.renderCards(this.state.cards)}</div>;
 
       // <div className="card">
       //   <div className="fact-text">{this.props.text}</div>

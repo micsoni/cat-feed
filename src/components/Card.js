@@ -1,20 +1,20 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default class Card extends React.Component {
-  state = {
-    likes: 0
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired
   };
-
-  likeCard = () => this.setState({ likes: this.state.likes + 1 });
-
   render() {
     return (
       <div className="card">
         <img className="image" src={this.props.src} alt="useful" />
         {/* <b>{this.state.numLikes}</b> */}
-        <div>{this.state.likes}</div>
-        <button onClick={this.likeCard}>More Cats!</button>
-        <div className="fact-text">{this.props.text}</div>
+        <div>{this.props.likes}</div>
+        <button onClick={this.props.likeCard}>More Cats!</button>
+        {/* <div className="fact-text">{this.props.text}</div> */}
       </div>
     );
   }
