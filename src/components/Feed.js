@@ -26,9 +26,6 @@ export default class Feed extends React.Component {
   }
 
   addLike = id => {
-    // get the id from current card
-    // check if id from current card is the right one
-    // inside a map
     const updatedCards = this.state.cards.map(currCard => {
       if (currCard.id === id) {
         console.log("currCard id:", currCard.id);
@@ -41,29 +38,32 @@ export default class Feed extends React.Component {
 
     this.setState({ cards: updatedCards });
   };
-  // this.setState({ likes: this.state.likes + 1 });
 
   renderCards = cardsArray => {
-    return cardsArray.map(card => {
+    // Sorting the cardsArray before mapping over it.
+    // copying the array of cards because .sort mutates the original array.
+    const copiedCards = [...cardsArray];
+    const sortedCardsByLikes = copiedCards.sort((a, b) => b.likes - a.likes);
+    console.log("sortedCards", sortedCardsByLikes);
+
+    return sortedCardsByLikes.map(card => {
       return (
         <Card
           key={card.id}
           src={card.src}
           id={card.id}
           likes={card.likes}
-          incrementLikes={this.addLike}
+          incrementLike={() => this.addLike(card.id)}
         />
       );
     });
   };
 
   render() {
-    if (this.state.loading) {
-      return <div>Loading!</div>;
-    } else if (this.state.error) {
-      return <div>Error!</div>;
-    } else {
-      return <div> {this.renderCards(this.state.cards)}</div>;
-    }
+    return this.state.loading ? (
+      <div>Loading!</div>
+    ) : (
+      <div> {this.renderCards(this.state.cards)}</div>
+    );
   }
 }
