@@ -11,10 +11,7 @@ export default class Feed extends React.Component {
   componentDidMount() {
     const fetchCustom = breed => {
       fetch(
-        // "https://api.thecatapi.com/v1/images/search?limit=5&page=10&order=Desc"
-        // "https://api.thecatapi.com/v1/breeds?attach_breed=beng&limit=5"
-        `https://api.thecatapi.com/v1/images/search?breed_id=${breed}&limit=5`
-        // "https://api.thecatapi.com/v1/breeds"
+        "https://api.thecatapi.com/v1/images/search?limit=8&page=10&order=Desc"
       )
         .then(res => res.json())
         .then(data => {
