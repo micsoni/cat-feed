@@ -42,20 +42,6 @@ export default class App extends React.Component {
     return links;
   };
 
-  generateBreedPages = array => {
-    const pages = array.map(breed => {
-      return (
-        <BreedPage
-          id={breed.id}
-          title={breed.name}
-          information={breed.description}
-          behaviour={breed.temperament}
-        />
-      );
-    });
-    return pages;
-  };
-
   render() {
     return (
       <div className="App">
