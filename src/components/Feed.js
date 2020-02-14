@@ -5,15 +5,11 @@ export default class Feed extends React.Component {
   state = {
     loading: true,
     error: false,
-    cards: [] // [{ id: "1", src:"http", likes:0}]
+    cards: []
   };
 
-  // Bengal
-  // https://api.thecatapi.com/v1/images/search?breed_id=beng
   componentDidMount() {
     const fetchCustom = breed => {
-      // const keyWord = breed;
-
       fetch(
         // "https://api.thecatapi.com/v1/images/search?limit=5&page=10&order=Desc"
         // "https://api.thecatapi.com/v1/breeds?attach_breed=beng&limit=5"

@@ -38,12 +38,9 @@ export default class App extends React.Component {
           </section>
           <section id="feed">
             <Route exact path="/" component={Feed} />
-            {/* <Feed /> */}
           </section>
         </main>
       </div>
     );
   }
 }
-
-// export default App;

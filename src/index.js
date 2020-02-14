@@ -5,12 +5,6 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 
-// install new package
-// import Route and Link from new package
-// import Route on components
-// Wrap BrowserRouter around App
-//
-
 ReactDOM.render(
   <BrowserRouter>
     <App />
