@@ -8,21 +8,33 @@ export default class Feed extends React.Component {
     cards: [] // [{ id: "1", src:"http", likes:0}]
   };
 
+  // Bengal
+  // https://api.thecatapi.com/v1/images/search?breed_id=beng
   componentDidMount() {
-    return fetch(
-      "https://api.thecatapi.com/v1/images/search?limit=5&page=10&order=Desc"
-    )
-      .then(res => res.json())
-      .then(data => {
-        const dataMaped = data.map(imageDetails => {
-          return { src: imageDetails.url, id: imageDetails.id, likes: 0 };
+    const fetchCustom = breed => {
+      // const keyWord = breed;
+
+      fetch(
+        // "https://api.thecatapi.com/v1/images/search?limit=5&page=10&order=Desc"
+        // "https://api.thecatapi.com/v1/breeds?attach_breed=beng&limit=5"
+        `https://api.thecatapi.com/v1/images/search?breed_id=${breed}&limit=5`
+        // "https://api.thecatapi.com/v1/breeds"
+      )
+        .then(res => res.json())
+        .then(data => {
+          console.log(" i am here!");
+
+          const dataMaped = data.map(imageDetails => {
+            return { src: imageDetails.url, id: imageDetails.id, likes: 0 };
+          });
+          this.setState({ cards: dataMaped, loading: false });
+        })
+        .catch(error => {
+          this.setState({ error: true });
+          console.log(error);
         });
-        this.setState({ cards: dataMaped, loading: false });
-      })
-      .catch(error => {
-        this.setState({ error: true });
-        console.log(error);
-      });
+    };
+    return fetchCustom("beng");
   }
 
   addLike = id => {
